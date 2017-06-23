@@ -1,0 +1,35 @@
+<form class="row" ng-submit="noteFormName.$valid && form.addNote()" name="noteFormName" novalidate>
+  <div class="col-xs-3 form-group">
+    <label for="noteTitle">Note Title</label>
+    <input type="text" class="form-control" id="noteTitle" placeholder="Type a note title" ng-model="form.note.title" required><!--automatically {{form.note.title}} will trim, thereforer just typing spaces won't pass required validation --> 
+    <!-- alert for too long title start -->
+    <div id="myalert1" ng-show="form.note.title.length >= 25" class="alert alert-success" style="margin-top:5px;margin-bottom:5px;font-size:12px;padding:5px" role="alert">
+      Title should not be longer than 25 characters
+    </div>
+    <!-- alert for too long title end -->
+    <!-- Live Preview start -->
+    <div id="myalert2" ng-show="form.note.title" class="alert alert-warning" style="margin-top:5px;font-size:12px;padding:5px" role="alert">
+      You are going to add a note titled "<cite>{{form.note.title}}</cite>".
+    </div>
+    <!-- live preview end -->
+  </div>
+  <div class="col-xs-6 form-group">
+    <label for="noteBody">Note Content</label>
+    <textarea class="form-control" id="noteBody" rows="3" cols="50" placeholder="Type a note content" ng-model="form.note.body" required></textarea>
+  </div> 
+  <div class="col-xs-3">
+    <div style="margin-top: 24px;
+                  width: 80%;
+                  margin-left: auto;
+                  margin-right: auto;"> <!--this is how to center the element inside another div, prerequisite is it has to be block element-->
+      <button id="addButton" ng-hide="form.note.title.length >= 25" class="btn btn-success">Add a note</button>  <!--inside a form, button is of type submit by default -->
+      <button id="deleteAllButton" class="btn btn-warning">Clear all notes</button>
+    </div>    
+  </div>
+</form>
+     
+      
+     
+          
+    
+  
