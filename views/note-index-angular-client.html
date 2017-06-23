@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Welcome to Gomix!</title>
+    <meta name="description" content="A cool thing made with Gomix">
+    <link id="favicon" rel="icon" href="https://gomix.com/favicon-app.ico" type="image/x-icon">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <!--no need of jquery and bootstrap js, now jquery is needed because in link function I have jquery $ reference-->
+    <script   src="https://code.jquery.com/jquery-3.1.1.min.js"   integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="   crossorigin="anonymous"></script> 
+    <!--bootstrap js is now needed for closing the alert box in top-->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.11/angular.min.js"></script>
+    <!--script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.11/angular-route.js"></script-->
+    <script src="/angular-client/js/application.js"></script>
+    <script src="/angular-client/js/directive/panel.js"></script>
+    <script src="/angular-client/js/directive/form.js"></script>
+    <script src="/angular-client/js/controller/panelListController.js"></script>
+  </head>
+  <body ng-app="notesApp">
+    <div class="container-fluid">
+      <header>
+        <h1 class="text-center">
+          Notes Taking Never Made So Easy!<hr>
+          <small>Angular Enabled: {{true ? true : false}}</small>
+        </h1>
+        <div id="alert_placeholder">       
+        </div>       
+      </header>
+      <main ng-controller="PanelListController as panelList">
+        <note-operation-form parentobject="panelList"></note-operation-form>
+        <div style="margin-top: 20px" class="row" id="notesShowRoom">
+          <note-panel ng-repeat="note in panelList.panels"></note-panel>
+        </div>
+      </main>
+      <footer>
+      </footer>
+    </div>
+  </body>
+</html>

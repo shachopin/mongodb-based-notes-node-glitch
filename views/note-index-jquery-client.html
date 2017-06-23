@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Welcome to Gomix!</title>
+    <meta name="description" content="A cool thing made with Gomix">
+    <link id="favicon" rel="icon" href="https://gomix.com/favicon-app.ico" type="image/x-icon">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script   src="https://code.jquery.com/jquery-3.1.1.min.js"   integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="   crossorigin="anonymous"></script> 
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script src="/jquery-client/js/application.js"></script>
+  </head>
+  <body>
+    <div class="container-fluid">
+      <header>
+        <h1 class="text-center">
+          Notes Taking Never Made So Easy!
+          <hr>
+        </h1>
+        <!-- standard alert message box with close option -->
+        <!--div class="alert alert-success alert-dismissible fade in show" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h4 class="alert-heading">Well done!</h4>
+          <p>Aww yeah, you successfully read this important alert message. This example text is going to run a bit longer so that you can see how spacing within an alert works with this kind of content.</p>
+          <p class="mb-0">Whenever you need to, be sure to use margin utilities to keep things nice and tidy.<strong>Holy guacamole!</strong> You should check in on some of those fields below. read <a href="#" class="alert-link">this important alert message</a>.</p>
+        </div-->
+        <div id="alert_placeholder">       
+        </div>       
+      </header>
+
+      <main>
+        <div class="row">
+          <div class="col-xs-9">
+            <div>
+              <form class="row">
+                <div class="col-xs-4 form-group">
+                  <label for="noteTitle">Note Title</label>
+                  <input type="text" class="form-control" id="noteTitle" placeholder="Type a note title">   
+                  <div id="myalert" class="alert alert-success" style="margin-top:5px;font-size:12px;padding:5px;display:none" role="alert">
+                    Title should not be longer than 25 characters
+                  </div>
+                </div>
+                <div class="col-xs-8 form-group">
+                  <label for="noteBody">Note Content</label>
+                  <textarea class="form-control" id="noteBody" rows="3" cols="50" placeholder="Type a note content"></textarea>
+                </div>           
+              </form>
+            </div>
+          </div>
+          <div class="col-xs-3">
+            <!--div class="btn-group-vertical" style="width:70%; margin: 22px auto; display:block"--> 
+            <!--btn-group-vertial by defualt will be set to inline-block by bootstrap, this will break the margin 0 auto centering -->  <!--for inline element, width and top and down padding (and margin) not applied -->
+              <!--button id="addButton" class="btn btn-success">
+                Add a note
+              </button-->
+              <!--button id="listButton" class="btn btn-primary">
+                List all notes
+              </button-->    
+              <!--button id="deleteAllButton" class="btn btn-warning">
+                Clear all notes
+              </button-->
+            <!--/div-->
+            <div style="margin-top: 24px;
+                        width: 80%;
+                        margin-left: auto;
+                        margin-right: auto;"> <!--this is how to center the element inside another div, prerequisite is it has to be block element-->
+              <button id="addButton" class="btn btn-success"> <!--outside a form, button is of type button by default -->
+                Add a note
+              </button> 
+              <button id="deleteAllButton" class="btn btn-warning">
+                Clear all notes
+              </button>
+            </div>      
+          </div>
+        </div>
+        <div style="margin-top: 20px" class="row" id="notesShowRoom">
+        </div>
+      </main>
+
+      <footer>
+      </footer>
+    </div>
+  </body>
+</html>
+
+<!--
+
+0.VERY IMPORTANT CONCEPT!!!!!!
+http://api.jquery.com/jquery.getjson/
+
+The jqXHR Object, which is deferred object, similar to javascript native promise object, but not the same
+
+As of jQuery 1.5, all of jQuery's Ajax methods return a superset of the XMLHTTPRequest object. 
+This jQuery XHR object, or "jqXHR," returned by $.getJSON() implements the Promise interface, 
+giving it all the properties, methods, and behavior of a Promise (see Deferred object for more information). 
+The jqXHR.done() (for success), jqXHR.fail() (for error), and jqXHR.always() (
+for completion, whether success or error; 
+added in jQuery 1.6) methods take a function argument that is called when the request terminates. 
+For information about the arguments this function receives, see the jqXHR Object section of the $.ajax() documentation.
+
+The Promise interface in jQuery 1.5 also allows jQuery's Ajax methods, including $.getJSON(), 
+to chain multiple .done(), .always(), and .fail() callbacks on a single request, 
+and even to assign these callbacks after the request may have completed. 
+If the request is already complete, the callback is fired immediately.
+
+// Assign handlers immediately after making the request,
+// and remember the jqxhr object for this request
+var jqxhr = $.getJSON( "example.json", function() {
+  console.log( "success" );
+})
+  .done(function() {
+    console.log( "second success" );
+  })
+  .fail(function() {
+    console.log( "error" );
+  })
+  .always(function() {
+    console.log( "complete" );
+  });
+ 
+// Perform other work here ...
+ 
+// Set another completion function for the request above
+jqxhr.complete(function() {
+  console.log( "second complete" );
+});
+Deprecation Notice
+
+The jqXHR.success(), jqXHR.error(), and jqXHR.complete() callback methods are removed as of jQuery 3.0. You can use jqXHR.done(), jqXHR.fail(), and jqXHR.always() instead.
+
+For Example:
+Load the JSON data from test.js and access a name from the returned JSON data.
+
+$.getJSON( "test.js", function( json ) {
+  console.log( "JSON Data: " + json.users[ 3 ].name ); //successful request
+ });
+
+Load the JSON data from test.js, passing along additional data, 
+and access a name from the returned JSON data. If an error occurs, log an error message instead.
+
+$.getJSON( "test.js", { name: "John", time: "2pm" } )
+  .done(function( json ) {
+    console.log( "JSON Data: " + json.users[ 3 ].name ); //successful requst
+  })
+  .fail(function( jqxhr, textStatus, error ) {
+    var err = textStatus + ", " + error;
+    console.log( "Request Failed: " + err );
+});
+
+1.https://www.promisejs.org/  good webtie
+
+Put simply, .then is to .done as .map is to .forEach. To put that another way, 
+use .then whenever you're going to do something with the result (even if that's just waiting for it to finish) 
+and use .done whenever you aren't planning on doing anything with the result.
+function readJSON(filename){
+  return new Promise(function (fulfill, reject){
+    readFile(filename, 'utf8').done(function (res){
+      try {
+        fulfill(JSON.parse(res));
+      } catch (ex) {
+        reject(ex);
+      }
+    }, reject);
+  });
+}
+
+same as
+
+function readJSON(filename){
+  return readFile(filename, 'utf8').then(function (res){
+    return JSON.parse(res)
+  })
+}
+
+Since JSON.parse is just a function, we could re-write this as:
+
+function readJSON(filename){
+  return readFile(filename, 'utf8').then(JSON.parse);
+}
+
+https://www.promisejs.org/api/
+Promise.prototype.catch(onRejected)
+Equivalent to calling Promise.prototype.then(undefined, onRejected)
+var p1 = new Promise(function(resolve, reject) {
+  resolve("Success");
+});
+
+p1.then(function(value) {
+  console.log(value); // "Success!"
+  throw "oh, no!"; //throw can be caught as an unsuccessful condition as well, just like by reject(e)
+}).catch(function(e) {
+  console.log(e); // "oh, no!"
+});
+
+p1.then(function(value) {
+  console.log(value); // "Success!"
+  throw "oh, no!";
+}).then(undefined, function(e) {
+  console.log(e); // "oh, no!"
+});
+
+Promise.prototype.done(onFulfilled, onRejected) Non Standard
+Calls onFulfilled or onRejected with the fulfillment value or rejection reason of the promise (as appropriate).
+
+Unlike Promise.prototype.then it does not return a Promise. 
+It will also throw any errors that occur in the next tick, so they are not silenced. 
+In node.js they will then crash your process (so it can be restarted in a clean state). 
+In browsers, this will cause the error to be properly logged.
+
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise
+
+Promise.prototype.then(onFulfilled, onRejected)
+Appends fulfillment and rejection handlers to the promise, \
+and returns a new promise resolving to the return value of the called handler, 
+or to its original settled value if the promise was not handled 
+(i.e. if the relevant handler onFulfilled or onRejected is not a function).
+
+jQuery
+This feels like a good time to warn you that what jQuery calls a promise is in fact totally different to what everyone else calls a promise. jQuery's promises have a poorly thought out API that will likely just confuse you. Fortunately, instead of using jQuery's strange version of a promise, you can just convert it to a really simple standardised promise:
+
+var jQueryPromise = $.ajax('/data.json');
+var realPromise = Promise.resolve(jQueryPromise);
+//now just use `realPromise` however you like.
+
+2 For Angualar Promises:
+https://github.com/angular/angular.js/issues/10508
+
+Hello. $http returns a normal promise for a server response object (with data, status, headers etc.). 
+As a normal promise, returning values from a handler in .then results in a new exported promise for the value 
+(or assimilation, if the return value is a promise, or rejection in case of error, etc.). That is all well and good.
+
+For convenience/abstraction, AngularJS provides two custom methods on promises returned by 
+$http: .success and .error. Each takes a single handler with the data, status etc. as parameters.
+
+The problem is that people familiar with promises will likely try to chain off of 
+.success, perhaps by transforming and returning new values or new promises. 
+However, .success does not return a new promise; rather, it returns the original promise:
+
+angular.module('promisesApp')
+  .controller('MainCtrl', function ($http, $log) {
+
+    $http.get('/api/things')
+      .success(function (data) {
+        $log.debug('in success:', data); // these are the things from the API
+        return 'a new value';
+      })
+      .then(function (data) {
+        $log.debug('in chained .then:', data);
+        // data is the original server response object, NOT 'a new value'
+        // data.data are the things from the API
+      });
+
+  });
+If you were trying to make .success chainable in the same way .then is, 
+it would be easy to change in the AngularJS source, and indeed I had started work on a pull request:
+
+-->

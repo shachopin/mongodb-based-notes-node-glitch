@@ -1,0 +1,7 @@
+<div class="col-xs-6 col-md-3">
+  <div class="panel panel-primary" style="cursor:pointer">
+    <div class="panel-heading">{{note.title}}<span class="glyphicon glyphicon-remove removeIcon" style="float:right;cursor:pointer" ng-click="deleteNote(note.title, panelList.panels)"></span></div>
+    <div class="panel-body" style="word-break:break-all;height: 100px;overflow-y: scroll;">{{note.body}}</div><!--no need to do event.stopPropagation(); as in jquery way -->
+  </div>
+</div>
+<!--style="cursor:pointer" pretty cool to make the handshape click on usually not clickable element-->
