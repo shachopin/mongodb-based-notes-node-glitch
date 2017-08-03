@@ -323,6 +323,30 @@ function revokeRoles(grantIds)
       });  
    });
 }
+  
+var currentPerson = self.userManagement.currentUser();
+checkExistingIDCSRoleGrants(currentPerson.id).then(function(grantIds)
+{
+  revokeRoles(grantIds).then(function()
+  {
+     idcsRestFacade.removeIdcsUser(currentPerson.id)
+     .then(function(result)
+     {
+        self.closeRemoveUserDialog ();
+        self.userManagement.setConfirmationMessage (oj.Translations.getTranslatedString ('user.list.removedUser', self.userManagement.currentUser ().name ()));
+        self.userPagingListModel.removeRecord (currentPerson.id);
+
+        self.loadUsers (); // Refresh page of user records
+
+     }, function(e)
+     {
+        self.removeUserMessage.setError (oj.Translations.getTranslatedString ('user.list.errorRemovingUser'));
+     });
+  }).catch(function(e)
+  {
+     self.removeUserMessage.setError (oj.Translations.getTranslatedString ('user.list.errorRemovingUser'));
+  });
+           
 
 6. 
 p1.then(function(value) {
