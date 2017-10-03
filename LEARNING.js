@@ -407,4 +407,54 @@ $http.get('/notes').then(function(data){
 });  
 
 9 return a value directly means the promise good condition is triggered, and the parameters gets that value
+but this only working in .then(), not workiing in original promise
 
+ return user.save().then(() => { //.then() returns a promise object. So here it's returned a promise with token as success argument (return token)
+    return token;
+  });
+  
+  check more in your repl example
+  
+var somePromise = new Promise((resolve, reject) => {
+  resolve('it worked');  //only one of them should be active
+  //return ('it worked');  //-------- this is not working
+  //throw('it failed');   //----------- this is working
+});
+
+somePromise.then((message) => {
+  console.log("success: ", message); 
+  //return Promise.resolve('it worked again');  //----------- this is working
+  return 'it worked again';   //----------- this is working
+})
+.then(function(message) {
+  console.log("success: ", message);
+})
+.catch(function(error){
+  console.log("error: ", error); //shows it failed
+});
+
+/////////////////////////////////////////////////////////////////////////
+
+function getPromise() {
+  return new Promise(function(resolve, reject) {
+    resolve(" I am working");
+  });
+} 
+  
+function consumePromise() {
+  return getPromise()  //need to return, below there is explanation...
+  .then(function(msg) {
+    console.log(msg);
+    //return "great";  will show great, without will show undefined in the below function
+  });
+}
+  
+consumePromise();
+
+consumePromise()
+.then(function(msg2){
+  console.log(msg2)  //shows undefined
+});
+
+//if in consumePromise function, you don't return getPromise(), it will say
+//Cannot read property 'then' of undefined
